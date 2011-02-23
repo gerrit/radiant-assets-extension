@@ -6,13 +6,6 @@ class ImagesExtension < Radiant::Extension
   description "Adds images to Radiant."
   url "http://yourwebsite.com/images"
   
-  # extension_config do |config|
-  #   config.gem 'some-awesome-gem
-  #   config.after_initialize do
-  #     run_something
-  #   end
-  # end
-
   # See your config/routes.rb file in this extension to define custom routes
   
   def activate

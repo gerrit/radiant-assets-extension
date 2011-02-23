@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "radiant-images-extension"
   s.version     = RadiantImagesExtension::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Your Name"]
-  s.email       = ["your email"]
+  s.authors     = ["Gerrit Kaiser"]
+  s.email       = ["gerrit@gerritkaiser.de"]
   s.homepage    = "http://yourwebsite.com/images"
   s.summary     = %q{Images for Radiant CMS}
   s.description = %q{Makes Radiant better by adding images!}
