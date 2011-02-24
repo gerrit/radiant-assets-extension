@@ -1,14 +1,27 @@
-<ul>
-<% @images.each do |image| %>
-  <li>
-    <%= image_tag image.upload.url %>
-    <%= image.upload_uid %>
-  </li>
-<% end %>
-</ul>
-
-<h2>Upload Image</h2>
-<% form_for @new_image, :url => admin_images_path, :html => {:multipart => true} do |f| %>
-  <%= f.file_field :upload %>
-  <%= f.submit %>
-<% end %>
+<div class="outset">
+  <table class="index" id="images"> 
+    <thead> 
+      <tr> 
+        <th class="name">Image</th> 
+        <th class="actions">Modify</th> 
+      </tr> 
+    </thead> 
+    <tbody>
+      <% unless @images.empty? %>
+        <% @images.each do |image| %>
+          <tr>
+            <td class="name"><%= image_listing(image) %></td>
+            <td class="actions"><%= link_to 'Remove', remove_admin_image_path(image), :class => 'action remove' %></td>
+          </tr>
+        <% end %>
+      <% else %>
+      <tr><td class='empty' colspan='2'>No Images</td></tr>
+      <% end %>
+    </tbody> 
+  </table> 
+</div>
+<div id="actions">
+  <ul>
+    <li><%= link_to 'Upload New Image', new_admin_image_path %></li>
+  </ul>
+</div>

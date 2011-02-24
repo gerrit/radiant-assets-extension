@@ -9,7 +9,6 @@ class ImagesExtension < Radiant::Extension
   url "http://yourwebsite.com/images"
   
   extension_config do |config|
-    
     dragonfly = Dragonfly[:images]
     dragonfly.configure_with(:imagemagick)
     dragonfly.configure_with(:rails)

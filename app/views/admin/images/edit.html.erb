@@ -1,0 +1,15 @@
+<h1>Edit Image</h1>
+
+<% form_for [:admin, @image], :html => {'data-onsubmit_status' => onsubmit_status(@image)} do |f| %>
+  <div class="form_area">
+    <p class="title">
+      Name: <%= @image.upload_uid %>
+    </p>
+    <%= image_tag @image.upload.url %>
+  </div>
+  <p class="buttons">
+    <%= save_model_button(@image) %>
+    <%= save_model_and_continue_editing_button(@image) %>
+    or <%= link_to 'Cancel', admin_snippets_url %>
+  </p>
+<% end %>
