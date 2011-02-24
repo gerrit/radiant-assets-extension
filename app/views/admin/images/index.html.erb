@@ -1,3 +1,14 @@
+<ul>
 <% @images.each do |image| %>
-  Image: <%= image.upload_uid %><br>
+  <li>
+    <%= image_tag image.upload.url %>
+    <%= image.upload_uid %>
+  </li>
+<% end %>
+</ul>
+
+<h2>Upload Image</h2>
+<% form_for @new_image, :url => admin_images_path, :html => {:multipart => true} do |f| %>
+  <%= f.file_field :upload %>
+  <%= f.submit %>
 <% end %>
