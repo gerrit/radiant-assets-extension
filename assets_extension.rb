@@ -15,23 +15,8 @@ class AssetsExtension < Radiant::Extension
     dragonfly.configure_with(:rails)
     dragonfly.define_macro(ActiveRecord::Base, :image_accessor)    
     dragonfly.url_path_prefix = path
-    
-    # HACK: AWS::S3 doesn't support S3 EU region 
-    # https://github.com/marcel/aws-s3/issues#issue/4/comment/411302
-    # we monkey-patch the default host and hardcode it to Europe
-    s3_region_hosts = {
-      'us-east-1' => 	's3.amazonaws.com',
-      'us-west-1' => 's3-us-west-1.amazonaws.com',
-      'eu-west-1' => 's3-eu-west-1.amazonaws.com',
-      'ap-southeast-1' => 's3-ap-southeast-1.amazonaws.com'
-    }
-    AWS::S3::DEFAULT_HOST.replace Radiant::Config['s3.host'] || s3_region_hosts['us-east-1']
-    
-    dragonfly.datastore = RadiantAssetsExtension::S3Store.new
-    dragonfly.datastore.configure do |d|
-      d.bucket_name = Radiant::Config['s3.bucket'] || 'radiant-assets-extension'
-      d.access_key_id = Radiant::Config['s3.key']
-      d.secret_access_key = Radiant::Config['s3.secret']
+    if RadiantAssetsExtension::S3Store.enabled?
+      dragonfly.datastore = RadiantAssetsExtension::S3Store.new
     end
     
     config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :assets, path
