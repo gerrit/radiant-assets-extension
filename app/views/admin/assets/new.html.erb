@@ -1,0 +1,8 @@
+<h1>Upload New Asset</h1>
+<% form_for @image, :url => admin_assets_path, :html => {:multipart => true, 'data-onsubmit_status'=>'Uploading Asset&#8230;'} do |f| %>
+  <%= f.file_field :upload %>
+  <p class="buttons">
+    <%= f.submit 'Upload Asset', :class=>'button' %>
+    or <%= link_to 'Cancel', admin_assets_path %>
+  </p>
+<% end %>

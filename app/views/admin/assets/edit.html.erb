@@ -1,8 +1,8 @@
-<% include_stylesheet 'admin/extensions/images/images' %>
+<% include_stylesheet 'admin/extensions/assets/assets' %>
 
-<h1>Edit Image</h1>
+<h1>Edit Asset</h1>
 
-<% form_for [:admin, @image], :html => {'data-onsubmit_status' => onsubmit_status(@image)} do |f| %>
+<% form_for @image, :url => admin_asset_path(@image), :html => {'data-onsubmit_status' => onsubmit_status(@image)} do |f| %>
   <div class="form_area">
     <p class="title">
       Name: <%= @image.upload_uid %>
@@ -20,6 +20,6 @@
   <p class="buttons">
     <%= save_model_button(@image) %>
     <%= save_model_and_continue_editing_button(@image) %>
-    or <%= link_to 'Cancel', admin_snippets_url %>
+    or <%= link_to 'Cancel', admin_assets_url %>
   </p>
 <% end %>

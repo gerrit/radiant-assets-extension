@@ -1,8 +1,8 @@
 <div class="outset">
-  <table class="index" id="images"> 
+  <table class="index" id="assets"> 
     <thead> 
       <tr> 
-        <th class="name">Image</th> 
+        <th class="name">Asset</th> 
         <th class="actions">Modify</th> 
       </tr> 
     </thead> 
@@ -11,17 +11,17 @@
         <% @images.each do |image| %>
           <tr>
             <td class="name"><%= image_listing(image) %></td>
-            <td class="actions"><%= link_to 'Remove', remove_admin_image_path(image), :class => 'action remove' %></td>
+            <td class="actions"><%= link_to 'Remove', remove_admin_asset_path(image), :class => 'action remove' %></td>
           </tr>
         <% end %>
       <% else %>
-      <tr><td class='empty' colspan='2'>No Images</td></tr>
+      <tr><td class='empty' colspan='2'>No Assets</td></tr>
       <% end %>
     </tbody> 
   </table> 
 </div>
 <div id="actions">
   <ul>
-    <li><%= link_to 'Upload New Image', new_admin_image_path %></li>
+    <li><%= link_to 'Upload New Asset', new_admin_asset_path %></li>
   </ul>
 </div>

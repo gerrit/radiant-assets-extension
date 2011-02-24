@@ -1,4 +1,4 @@
-module ImagesHelper
+module AssetsHelper
   def image_listing(image)
     square_thumb(image) +
     content_tag(:span, image_link(image), :class=>'title')
@@ -10,7 +10,7 @@ module ImagesHelper
   end
   
   def image_link(image)
-    link_to image.upload_uid, edit_admin_image_path(image)
+    link_to image.upload_uid, edit_admin_asset_path(image)
   end
   
   def image_tag(*args)

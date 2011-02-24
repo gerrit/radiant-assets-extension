@@ -1,4 +1,4 @@
-module ImageTags
+module AssetTags
   include Radiant::Taggable
   
   desc %{
