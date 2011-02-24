@@ -2,3 +2,42 @@
   max-width: 100%;
   overflow: auto;
 }
+
+#assets, #assets li {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#assets li {
+  float: left;
+  margin-right: 1px;
+  margin-bottom: 1px;
+  position: relative;
+}
+
+#assets li .id, #assets li .action {
+  position: absolute;
+  top: 2px;
+  display: none;
+}
+
+#assets li:hover .id, #assets li:hover .action {
+  display: block;
+}
+
+#assets li .id {
+  left: 2px;
+  color: white;
+  font-weight: bold;
+}
+
+#assets li .remove {
+  right: 2px;
+  background: url('/images/admin/minus.png');
+  width: 12px;
+  height: 12px;
+  text-indent: -1000em;
+  overflow: hidden;
+}

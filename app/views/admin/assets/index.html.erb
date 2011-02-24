@@ -1,24 +1,19 @@
+<% include_stylesheet 'admin/extensions/assets/assets' %>
+
 <div class="outset">
-  <table class="index" id="assets"> 
-    <thead> 
-      <tr> 
-        <th class="name">Asset</th> 
-        <th class="actions">Modify</th> 
-      </tr> 
-    </thead> 
-    <tbody>
-      <% unless @images.empty? %>
-        <% @images.each do |image| %>
-          <tr>
-            <td class="name"><%= image_listing(image) %></td>
-            <td class="actions"><%= link_to 'Remove', remove_admin_asset_path(image), :class => 'action remove' %></td>
-          </tr>
-        <% end %>
-      <% else %>
-      <tr><td class='empty' colspan='2'>No Assets</td></tr>
+  <ul id="assets">
+    <% unless @images.empty? %>
+      <% @images.each do |image| %>
+        <li>
+          <%= link_to square_thumb(image, 120), edit_admin_asset_path(image) %>
+          <span class="id">ID: <%= image.id %></span>
+          <%= link_to 'Remove', remove_admin_asset_path(image), :class => 'action remove', :title => 'Remove Asset' %>
+        </li>
       <% end %>
-    </tbody> 
-  </table> 
+    <% else %>
+    <li class='empty'>No Assets</li>
+    <% end %>
+  </ul>
 </div>
 <div id="actions">
   <%= pagination_for(@images) %>
