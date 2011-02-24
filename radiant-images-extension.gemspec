@@ -11,6 +11,9 @@ Gem::Specification.new do |s|
   s.homepage    = "http://yourwebsite.com/images"
   s.summary     = %q{Images for Radiant CMS}
   s.description = %q{Makes Radiant better by adding images!}
+  
+  s.add_dependency 'dragonfly', '~>0.8.2'
+  s.add_dependency 'aws-s3', '~>0.6.2'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
