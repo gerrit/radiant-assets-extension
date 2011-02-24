@@ -1,3 +1,5 @@
+<% include_stylesheet 'admin/extensions/images/images' %>
+
 <h1>Edit Image</h1>
 
 <% form_for [:admin, @image], :html => {'data-onsubmit_status' => onsubmit_status(@image)} do |f| %>
@@ -5,7 +7,15 @@
     <p class="title">
       Name: <%= @image.upload_uid %>
     </p>
-    <%= image_tag @image.upload.url %>
+    <table>
+      <tbody>
+        <tr><th>Width</th><td><%= @image.upload.width %></td></tr>
+        <tr><th>Height</th><td><%= @image.upload.height %></td></tr>
+      </tbody>
+    </table>
+    <div class="frame">
+      <%= image_tag @image %>
+    </div>
   </div>
   <p class="buttons">
     <%= save_model_button(@image) %>
