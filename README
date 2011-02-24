@@ -1,5 +1,19 @@
-= Images
+= Assets
 
-Radiant is so freaking awesome, but I made it better through this extension.
+Provides simple image handling, incl. on-the-fly resizing. Intended as a
+replacement for paperclipped in the long run, but very barebones right now.
 
-Created by Your Name. 
+== Radius Tags
+
+<r:images size="300x" />
+
+Proportionally resizes an image to 300px width. Supports imagemagick geometry
+strings to do advanced resizing straight in Radius tags. Resized images are
+cached in Radiant's built-in cache so they don't have to be re-created on every
+request.
+
+== Todo
+
+- Handling of non-image uploads
+- Attaching Assets to Pages
+- Easy/Automatic migration from paperclipped
