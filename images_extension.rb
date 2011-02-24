@@ -21,5 +21,6 @@ class ImagesExtension < Radiant::Extension
     tab 'Content' do
       add_item "Images", "/admin/images", :after => "Pages"
     end
+    Page.send :include, ImageTags
   end
 end
