@@ -1,7 +1,7 @@
 module AssetsHelper
   def asset_listing(asset)
     icon(asset) +
-    content_tag(:span, asset.upload_uid, :class=>'title')
+    content_tag(:span, asset.to_s, :class=>'title')
   end
   
   def icon(asset, size=30)
@@ -24,6 +24,22 @@ module AssetsHelper
       super image.upload.url, :width => image.upload.width, :height => image.upload.height
     else
       super(*args)
+    end
+  end
+  
+  def link_to_remove(asset)
+    link_to 'Remove', remove_admin_asset_path(asset), :class => 'action remove', :title => 'Remove Asset'
+  end
+  
+  def list_view?
+    params[:view] == 'list'
+  end
+  
+  def view_toggle
+    if list_view?
+      link_to 'Grid view', admin_assets_path(:view => 'grid')
+     else
+      link_to 'List view', admin_assets_path(:view => 'list')
     end
   end
 end

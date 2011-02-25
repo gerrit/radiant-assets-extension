@@ -1,0 +1,22 @@
+<table class="index" id="assets">
+  <thead>
+    <th class="name">Name</th>
+    <th class="format">Type</th>
+    <th class="size">Size</th>
+    <th class="actions">Modify</th>
+  </thead>
+  <tbody>
+    <% unless @assets.empty? %>
+      <% @assets.each do |asset| %>
+      <tr>
+        <td class="name"><%= asset_listing(asset) %></td>
+        <td class="format"><%= asset.format.to_s.mb_chars.upcase %></td>
+        <td class="size"><%= number_to_human_size(asset.upload.size) %></td>
+        <td class="actions"><%= link_to_remove(asset)  %></td>
+      </tr>
+      <% end %>
+    <% else %>
+    <tr><td class="empty" colspan="3"></td></tr>
+    <% end %>
+  </tbody>
+</table>

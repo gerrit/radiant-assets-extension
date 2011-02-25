@@ -3,11 +3,34 @@
   overflow: auto;
 }
 
-.icon {
+.index th.size {
+  min-width: 5em;
+}
+
+table.index .size {
+  text-align: right;
+  padding-right: 5px;
+}
+
+#assets .icon {
   display: block;
+  float: left;
   text-align: center;
   background: #ccc;
   text-transform: uppercase;
+}
+
+table#assets .icon {
+  display: block;
+  float: left;
+}
+
+table#assets .icon, table#assets .thumbnail {
+  margin-right: 5px;
+}
+
+table#assets .icon {
+  font-size: 75%;
 }
 
 #assets, #assets li {

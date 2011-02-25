@@ -1,27 +1,13 @@
 <% include_stylesheet 'admin/extensions/assets/assets' %>
 
 <div class="outset">
-  <ul id="assets">
-    <% unless @assets.empty? %>
-      <% @assets.each do |asset| %>
-        <li>
-          <% link_to edit_admin_asset_path(asset) do %>
-            <%= icon(asset, 120) %>
-            <span class="id">ID: <%= asset.id %></span>
-            <span class="caption"><%= asset %></span>
-          <% end %>
-          <%= link_to 'Remove', remove_admin_asset_path(asset), :class => 'action remove', :title => 'Remove Asset' %>
-        </li>
-      <% end %>
-    <% else %>
-    <li class='empty'>No Assets</li>
-    <% end %>
-  </ul>
+  <%= render :partial => list_view? ? 'list' : 'grid' %>
 </div>
 
 <div id="actions">
   <%= pagination_for(@assets) %>
   <ul>
     <li class="new"><%= link_to 'Upload New Asset', new_admin_asset_path %></li>
+    <li><%= view_toggle %></li>
   </ul>
 </div>
