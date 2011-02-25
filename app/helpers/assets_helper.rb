@@ -56,10 +56,7 @@ module AssetsHelper
   end
   
   def view_toggle
-    if list_view?
-      link_to 'Grid view', admin_assets_path(:view => 'grid')
-     else
-      link_to 'List view', admin_assets_path(:view => 'list')
-    end
+    other = list_view? ? 'grid' : 'list'
+    link_to "Switch to #{other} view", admin_assets_path(:view => other)
   end
 end
