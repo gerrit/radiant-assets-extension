@@ -3,6 +3,7 @@
     <th class="name">Name</th>
     <th class="format">Type</th>
     <th class="size">Size</th>
+    <th class="updated_at">Last Changed</th>
     <th class="actions">Modify</th>
   </thead>
   <tbody>
@@ -12,6 +13,7 @@
         <td class="name"><%= asset_listing(asset) %></td>
         <td class="format"><%= asset.format.to_s.mb_chars.upcase %></td>
         <td class="size"><%= number_to_human_size(asset.upload.size) %></td>
+        <td class="updated_at"><%= time_ago_in_words asset.updated_at %> ago</td>
         <td class="actions"><%= link_to_remove(asset)  %></td>
       </tr>
       <% end %>
