@@ -15,9 +15,10 @@
     <% end %>
   </ul>
 </div>
+
 <div id="actions">
   <%= pagination_for(@images) %>
   <ul>
-    <li><%= link_to 'Upload New Asset', new_admin_asset_path %></li>
+    <li class="new"><%= link_to 'Upload New Asset', new_admin_asset_path %></li>
   </ul>
 </div>
