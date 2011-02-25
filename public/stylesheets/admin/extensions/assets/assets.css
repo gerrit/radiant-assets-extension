@@ -19,7 +19,6 @@ table.index .size {
 
 #assets .icon {
   display: block;
-  float: left;
   text-align: center;
   background: #ccc;
   text-transform: uppercase;
@@ -36,6 +35,7 @@ table#assets .icon, table#assets .thumbnail {
 
 table#assets .icon {
   font-size: 75%;
+  float: left;
 }
 
 #assets, #assets li {
@@ -46,6 +46,7 @@ table#assets .icon {
 }
 
 #assets li {
+  background: #ccc;
   float: left;
   margin-right: 1px;
   margin-bottom: 1px;
