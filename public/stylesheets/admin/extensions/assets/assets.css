@@ -80,23 +80,31 @@ table#assets .icon {
   font-weight: bold;
 }
 
+#assets li .remove,
+table#assets .remove::before {
+  background: url('/images/admin/minus.png') no-repeat top left;  
+}
+
 #assets li .remove {
   right: 2px;
-  background: url('/images/admin/minus.png') no-repeat top left;
   width: 12px;
   height: 12px;
   text-indent: -1000em;
   overflow: hidden;
 }
 
+table#assets .remove::before,
 #actions .new a::before {
   content: '';
   width: 12px;
   height: 12px;
   padding-right: 3px;
-  position: relative;
+  position: relative;  
   top: 2px;
   display: block;
   display: inline-block;
+}
+
+#actions .new a::before {
   background: url('/images/admin/plus.png') no-repeat left bottom;
 }
