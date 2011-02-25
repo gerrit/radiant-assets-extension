@@ -6,9 +6,9 @@
       <% @assets.each do |asset| %>
         <li>
           <% link_to edit_admin_asset_path(asset) do %>
-            <%= square_thumb(asset, 120) %>
+            <%= icon(asset, 120) %>
             <span class="id">ID: <%= asset.id %></span>
-            <span class="caption"><%= asset.caption %></span>
+            <span class="caption"><%= asset %></span>
           <% end %>
           <%= link_to 'Remove', remove_admin_asset_path(asset), :class => 'action remove', :title => 'Remove Asset' %>
         </li>

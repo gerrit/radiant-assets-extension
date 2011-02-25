@@ -5,7 +5,7 @@
 </p>
 
 <table class="index" id="assets">
-  <tr><td class="name"><%= image_listing(@asset) %></td></tr>
+  <tr><td class="name"><%= asset_listing(@asset) %></td></tr>
 </table>
 
 <% form_for [:admin, @asset], :html => {:method => :delete, 'data-onsubmit_status'=>'Removing asset&#8230;'} do |f| %>

@@ -3,6 +3,8 @@
 Provides simple image handling, incl. on-the-fly resizing. Intended as a
 replacement for paperclipped in the long run, but very barebones right now.
 
+Supports uploading of images as well as other files.
+
 == Radius Tags
 
 <r:images size="300x" />
@@ -14,6 +16,5 @@ request.
 
 == Todo
 
-- Handling of non-image uploads
 - Attaching Assets to Pages
 - Easy/Automatic migration from paperclipped

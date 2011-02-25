@@ -1,16 +1,21 @@
 module AssetsHelper
-  def image_listing(image)
-    square_thumb(image) +
-    content_tag(:span, image_link(image), :class=>'title')
+  def asset_listing(asset)
+    icon(asset) +
+    content_tag(:span, asset.upload_uid, :class=>'title')
+  end
+  
+  def icon(asset, size=30)
+    asset.image? ? square_thumb(asset, size) : text_icon(asset, size)
+  end
+  
+  def text_icon(asset, size=30)
+    css = "width:#{size}px;height:#{size}px"
+    content_tag(:span, asset.format, :class => "icon #{asset.format}", :style => css)
   end
   
   def square_thumb(image, size=30)
     src = image.upload.thumb("#{size}x#{size}#").url
-    image_tag(src, :width=>size, :height => size)
-  end
-  
-  def image_link(image)
-    link_to image.upload_uid, edit_admin_asset_path(image)
+    image_tag(src, :width=>size, :height => size, :class => "thumbnail #{image.format}")
   end
   
   def image_tag(*args)

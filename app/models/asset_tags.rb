@@ -51,15 +51,29 @@ module AssetTags
       Renders the #{attribute} of the current asset
     }
     tag "asset:#{attribute}" do |tag|
-      tag.locals.asset && tag.locals.asset.send(attribute.to_sym)
+      tag.locals.asset.send(attribute.to_sym)
     end
   end
   
   desc %{
-    Renders the caption of the current
+    Renders the caption of the current asset
   }
   tag 'asset:caption' do |tag|
-    tag.locals.asset && tag.locals.asset.caption
+    tag.locals.asset.caption
+  end
+  
+  desc %{
+    Renders contents if the current asset is an image
+  }
+  tag 'asset:if_image' do |tag|
+    tag.expand if tag.locals.asset.image?
+  end
+
+  desc %{
+    Renders contents if the current asset isn't an image
+  }
+  tag 'asset:unless_image' do |tag|
+    tag.expand unless tag.locals.asset.image?
   end
   
   %w[landscape portrait].each do |orientation|
