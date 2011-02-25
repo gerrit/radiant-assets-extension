@@ -1,4 +1,4 @@
-module AssetsHelper
+module AssetsHelper  
   def asset_listing(asset)
     icon(asset) +
     content_tag(:span, asset.to_s, :class=>'title')
