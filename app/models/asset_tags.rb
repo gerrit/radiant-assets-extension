@@ -48,11 +48,18 @@ module AssetTags
   
   %w[url width height].each do |attribute|
     desc %{
-      Renders the #{attribute} of a specific asset
+      Renders the #{attribute} of the current asset
     }
     tag "asset:#{attribute}" do |tag|
       tag.locals.asset && tag.locals.asset.send(attribute.to_sym)
     end
+  end
+  
+  desc %{
+    Renders the caption of the current
+  }
+  tag 'asset:caption' do |tag|
+    tag.locals.asset && tag.locals.asset.caption
   end
   
   %w[landscape portrait].each do |orientation|

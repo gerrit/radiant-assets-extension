@@ -5,8 +5,11 @@
     <% unless @images.empty? %>
       <% @images.each do |image| %>
         <li>
-          <%= link_to square_thumb(image, 120), edit_admin_asset_path(image) %>
-          <span class="id">ID: <%= image.id %></span>
+          <% link_to edit_admin_asset_path(image) do %>
+            <%= square_thumb(image, 120) %>
+            <span class="id">ID: <%= image.id %></span>
+            <span class="caption"><%= image.caption %></span>
+          <% end %>
           <%= link_to 'Remove', remove_admin_asset_path(image), :class => 'action remove', :title => 'Remove Asset' %>
         </li>
       <% end %>

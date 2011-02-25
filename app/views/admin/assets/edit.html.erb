@@ -5,14 +5,17 @@
 <% form_for @image, :url => admin_asset_path(@image), :html => {'data-onsubmit_status' => onsubmit_status(@image)} do |f| %>
   <div class="form_area">
     <p class="title">
-      Name: <%= @image.upload_uid %>
+      Caption: <%= f.text_field :caption %>
     </p>
     <table>
       <tbody>
+        <tr><th>Name</th><td><%= @image.upload_uid %></td></tr>
         <tr><th>Width</th><td><%= @image.upload.width %></td></tr>
         <tr><th>Height</th><td><%= @image.upload.height %></td></tr>
       </tbody>
     </table>
+    <!-- FIXME: doesn't work at the moment -->
+    <!-- <%= f.file_field :upload %> -->
     <div class="frame">
       <%= image_tag @image %>
     </div>

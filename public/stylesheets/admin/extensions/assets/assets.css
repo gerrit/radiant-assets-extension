@@ -17,14 +17,25 @@
   position: relative;
 }
 
-#assets li .id, #assets li .action {
+#assets li .id,
+#assets li .caption,
+#assets li .action {
   position: absolute;
   top: 2px;
   display: none;
 }
 
-#assets li:hover .id, #assets li:hover .action {
+#assets li:hover .id,
+#assets li:hover .caption,
+#assets li:hover .action {
   display: block;
+}
+
+#assets li .caption {
+  top: auto;
+  bottom: 0;
+  color: white;
+  background: black;
 }
 
 #assets li .id {
