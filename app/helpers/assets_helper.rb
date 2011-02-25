@@ -30,9 +30,23 @@ module AssetsHelper
   def display(asset)
     if @asset.image?
       content_tag :div, image_tag(@asset), :class => "image frame #{@asset.format}"
+    elsif @asset.audio?
+      audio_player(@asset)
+    elsif @asset.video?
+      video_player(@asset)
     elsif @asset.format == :pdf
       content_tag :iframe, '', :src => @asset.upload.url, :class => "pdf frame"
     end
+  end
+  
+  def video_player(asset)
+    content_tag :video, :controls => 'controls' do
+      content_tag :source, '', :src => @asset.upload.url, :type => @asset.upload.mime_type
+    end
+  end
+  
+  def audio_player(asset)
+    %Q{<audio src="#{asset.upload.url}" type="#{asset.upload.mime_type}" controls="controls">}
   end
   
   def link_to_remove(asset)
