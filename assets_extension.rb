@@ -17,6 +17,9 @@ class AssetsExtension < Radiant::Extension
     dragonfly.url_path_prefix = path
     if RadiantAssetsExtension::S3Store.enabled?
       dragonfly.datastore = RadiantAssetsExtension::S3Store.new
+      dragonfly.datastore.configure do |c|
+        c.use_filesystem = false
+      end
     end
     
     config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :assets, path
