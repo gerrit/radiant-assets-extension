@@ -28,7 +28,7 @@ module AssetTags
   # resizing proportionally
   tag 'image' do |tag|
     assert_id_given(tag)
-    image = find_image(tag)
+    image = find_asset(tag)
     %{<img src="#{image.url}" width="#{image.width}" height="#{image.height}">}
   end
   
@@ -42,7 +42,7 @@ module AssetTags
   }
   tag 'asset' do |tag|
     assert_id_given(tag)
-    tag.locals.asset = find_image(tag)
+    tag.locals.asset = find_asset(tag)
     tag.expand
   end
   
@@ -83,12 +83,12 @@ private
     raise TagError, 'Please supply an id attribute' unless tag.attr['id']
   end
 
-  def find_image(tag)
-    image = Image.find(tag.attr['id'])
+  def find_asset(tag)
+    asset = Asset.find(tag.attr['id'])
     if(tag.attr['size'])
-      image.upload.process(:resize, tag.attr['size'])
+      asset.upload.process(:resize, tag.attr['size'])
     else
-      image.upload
+      asset.upload
     end
   end
 end

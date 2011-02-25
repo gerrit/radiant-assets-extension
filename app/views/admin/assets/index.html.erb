@@ -2,15 +2,15 @@
 
 <div class="outset">
   <ul id="assets">
-    <% unless @images.empty? %>
-      <% @images.each do |image| %>
+    <% unless @assets.empty? %>
+      <% @assets.each do |asset| %>
         <li>
-          <% link_to edit_admin_asset_path(image) do %>
-            <%= square_thumb(image, 120) %>
-            <span class="id">ID: <%= image.id %></span>
-            <span class="caption"><%= image.caption %></span>
+          <% link_to edit_admin_asset_path(asset) do %>
+            <%= square_thumb(asset, 120) %>
+            <span class="id">ID: <%= asset.id %></span>
+            <span class="caption"><%= asset.caption %></span>
           <% end %>
-          <%= link_to 'Remove', remove_admin_asset_path(image), :class => 'action remove', :title => 'Remove Asset' %>
+          <%= link_to 'Remove', remove_admin_asset_path(asset), :class => 'action remove', :title => 'Remove Asset' %>
         </li>
       <% end %>
     <% else %>
@@ -20,7 +20,7 @@
 </div>
 
 <div id="actions">
-  <%= pagination_for(@images) %>
+  <%= pagination_for(@assets) %>
   <ul>
     <li class="new"><%= link_to 'Upload New Asset', new_admin_asset_path %></li>
   </ul>
