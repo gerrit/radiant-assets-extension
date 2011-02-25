@@ -3,6 +3,11 @@
   overflow: auto;
 }
 
+.pdf.frame {
+  width: 100%;
+  height: 30em;
+}
+
 .index th.size {
   min-width: 5em;
 }

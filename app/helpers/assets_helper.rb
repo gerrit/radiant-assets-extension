@@ -27,6 +27,14 @@ module AssetsHelper
     end
   end
   
+  def display(asset)
+    if @asset.image?
+      content_tag :div, image_tag(@asset), :class => "image frame #{@asset.format}"
+    elsif @asset.format == :pdf
+      content_tag :iframe, '', :src => @asset.upload.url, :class => "pdf frame"
+    end
+  end
+  
   def link_to_remove(asset)
     link_to 'Remove', remove_admin_asset_path(asset), :class => 'action remove', :title => 'Remove Asset'
   end

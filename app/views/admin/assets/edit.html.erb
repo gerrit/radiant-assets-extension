@@ -9,16 +9,16 @@
     </p>
     <table>
       <tbody>
-        <tr><th>Name</th><td><%= @asset.upload_uid %></td></tr>
+        <tr><th>Name</th><td><%= @asset.upload.name %></td></tr>
+        <% if @asset.image? %>
         <tr><th>Width</th><td><%= @asset.upload.width %></td></tr>
         <tr><th>Height</th><td><%= @asset.upload.height %></td></tr>
+        <% end %>
       </tbody>
     </table>
     <!-- FIXME: doesn't work at the moment -->
     <!-- <%= f.file_field :upload %> -->
-    <div class="frame">
-      <%= image_tag @asset %>
-    </div>
+    <%= display(@asset) %>
   </div>
   <p class="buttons">
     <%= save_model_button(@asset) %>
