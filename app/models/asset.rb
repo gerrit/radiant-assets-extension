@@ -10,8 +10,8 @@ class Asset < ActiveRecord::Base
      # HACK: relying on extension instead of using analyser and upload.format
      # analyser can throw us into very long loop when trying to identify
      # non-image files like word docs
-     upload.ext.to_sym
-  rescue UnableToHandle
+     upload.ext && upload.ext.to_sym
+  rescue Dragonfly::FunctionManager::UnableToHandle
     :generic
   end
   

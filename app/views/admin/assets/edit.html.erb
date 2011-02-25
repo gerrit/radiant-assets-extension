@@ -2,7 +2,7 @@
 
 <h1>Edit Asset</h1>
 
-<% form_for [:admin, @asset], :html => {'data-onsubmit_status' => onsubmit_status(@asset)} do |f| %>
+<% form_for [:admin, @asset], :html => {:multipart => true, 'data-onsubmit_status' => onsubmit_status(@asset)} do |f| %>
   <div class="form_area">
     <p class="title">
       Caption: <%= f.text_field :caption %>
@@ -16,8 +16,7 @@
         <% end %>
       </tbody>
     </table>
-    <!-- FIXME: doesn't work at the moment -->
-    <!-- <%= f.file_field :upload %> -->
+    <%= f.file_field :upload %>
     <%= display(@asset) %>
   </div>
   <p class="buttons">
