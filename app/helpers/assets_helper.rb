@@ -40,9 +40,7 @@ module AssetsHelper
   end
   
   def video_player(asset)
-    content_tag :video, :controls => 'controls' do
-      content_tag :source, '', :src => @asset.upload.url, :type => @asset.upload.mime_type
-    end
+    %Q{<video src="#{asset.upload.url}" type="#{asset.upload.mime_type}" controls="controls">}
   end
   
   def audio_player(asset)
