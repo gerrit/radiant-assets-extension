@@ -43,6 +43,7 @@ table#assets .icon {
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 #assets li {
@@ -51,7 +52,6 @@ table#assets .icon {
   margin-right: 1px;
   margin-bottom: 1px;
   position: relative;
-  overflow: hidden;
 }
 
 #assets li a {
