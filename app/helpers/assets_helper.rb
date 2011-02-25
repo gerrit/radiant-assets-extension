@@ -9,7 +9,7 @@ module AssetsHelper
   end
   
   def text_icon(asset, size=30)
-    css = "width:#{size}px;height:#{size}px"
+    css = "width:#{size}px;height:#{size}px;line-height:#{size}px"
     content_tag(:span, asset.format, :class => "icon #{asset.format}", :style => css)
   end
   
