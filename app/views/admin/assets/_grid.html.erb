@@ -3,7 +3,7 @@
     <% @assets.each do |asset| %>
       <li>
         <% link_to edit_admin_asset_path(asset) do %>
-          <%= icon(asset, 120) %>
+          <%= asset_icon(asset, 120) %>
           <span class="id">ID: <%= asset.id %></span>
           <span class="caption"><%= asset %></span>
         <% end %>

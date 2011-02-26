@@ -29,6 +29,11 @@ class AssetsExtension < Radiant::Extension
     tab 'Content' do
       add_item 'Assets', '/admin/assets', :after => 'Pages'
     end
+    admin.page.edit.add :form, 'admin/assets/attachments'
+    ApplicationController.helper(:assets)
     Page.send :include, AssetTags
+    Page.class_eval do
+      has_many :attachments, :include => :asset
+    end
   end
 end

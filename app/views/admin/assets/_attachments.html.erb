@@ -1,0 +1,8 @@
+<% if @page.attachments.any? %>
+  <h2>Attachments</h2>
+  <ul>
+  <% @page.attachments.each do |attachment| %>
+    <li><%= asset_listing attachment.asset %></li>
+  <% end %>
+  </ul>
+<% end %>

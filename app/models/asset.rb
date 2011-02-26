@@ -1,4 +1,5 @@
 class Asset < ActiveRecord::Base
+  has_many :attachments, :include => :page
   # HACK: incomplete
   AUDIO_FORMATS = [:wav, :mp3, :m4a, :ogg]
   VIDEO_FORMATS = [:mp4, :avi]

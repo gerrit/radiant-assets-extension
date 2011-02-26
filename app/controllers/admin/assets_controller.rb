@@ -1,6 +1,5 @@
 class Admin::AssetsController < Admin::ResourceController
   paginate_models
-  helper :assets
   
   def create
     # HACK: depends on javascript being present and packaging each file

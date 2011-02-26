@@ -1,10 +1,10 @@
 module AssetsHelper  
   def asset_listing(asset)
-    icon(asset) +
+    asset_icon(asset) +
     content_tag(:span, asset.to_s, :class=>'title')
   end
   
-  def icon(asset, size=30)
+  def asset_icon(asset, size=30)
     asset.image? ? square_thumb(asset, size) : text_icon(asset, size)
   end
   
