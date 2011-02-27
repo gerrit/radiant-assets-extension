@@ -1,8 +1,10 @@
 <% if @page.attachments.any? %>
   <h2>Attachments</h2>
   <ul>
-  <% @page.attachments.each do |attachment| %>
+  <% @page.attachments.reject(&:new_record?).each do |attachment| %>
     <li><%= asset_listing attachment.asset %></li>
   <% end %>
   </ul>
 <% end %>
+
+<%= render :partial => 'admin/assets/upload', :locals => {:record => @page.attachments.build, :url => admin_page_attachments_path(@page)} %>

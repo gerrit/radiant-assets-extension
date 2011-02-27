@@ -7,6 +7,18 @@ class Asset < ActiveRecord::Base
   image_accessor :upload
   validates_presence_of :upload
   
+  def uploads
+    []
+  end
+  
+  def uploads=(new_uploads)
+    # HACK: depends on javascript being present and packaging each file
+    # in its own request
+    # TODO: handle non-js situations with several files in one request
+    # see Admin::AttachmentsController#create and Admin::AssetsController#create
+    self.upload = Array(new_uploads).first
+  end
+  
   def format
      # HACK: relying on extension instead of using analyser and upload.format
      # analyser can throw us into very long loop when trying to identify

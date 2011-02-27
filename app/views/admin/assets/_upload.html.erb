@@ -1,0 +1,54 @@
+<table id="files">
+  <tbody></tbody>
+</table>
+
+<% include_stylesheet 'admin/extensions/assets/assets' %>
+
+<% form_for record, :url => url, :html => {:multipart => true, :id => 'asset_upload', 'data-onsubmit_status'=>'Uploading Asset&#8230;'} do |f| %>
+  <p>You can select multiple files</p>
+  <%= f.file_field :uploads, :multiple => true %>
+  
+  <!-- <p class="buttons">
+    <%= f.submit 'Upload Asset', :class=>'button' %>
+    or <%= link_to 'Cancel', admin_assets_path %>
+  </p> -->
+<% end %>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>
+<% include_stylesheet 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css' %>
+<script type="text/javascript">jQuery.noConflict();</script>
+<script src="/jquery.fileupload/jquery.fileupload.js" type="text/javascript"></script>
+<script src="/jquery.fileupload/jquery.fileupload-ui.js" type="text/javascript"></script>
+<% include_stylesheet '/jquery.fileupload/jquery.fileupload-ui.css' %>
+<script type="text/javascript">
+  (function($) {
+    $(function () {
+      $('form#asset_upload').fileUploadUI({
+        uploadTable: $('#files'),
+        downloadTable: $('#files'),
+        buildUploadRow: function (files, index) {
+          return $('<tr><td>' + files[index].name + '<\/td>' +
+                   '<td class="file_upload_progress"><div><\/div><\/td>' +
+                   '<td class="file_upload_cancel">' +
+                   '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                   '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                   '<\/button><\/td><\/tr>');
+        },
+        buildDownloadRow: function (file) {
+          return $('<tr><td>' + file.markup + '<\/td><\/tr>');
+        }
+      });
+    });
+  }(jQuery));
+</script>
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>_upload.html</title>
+  </head>
+  <body>
+    
+  </body>
+</html>
