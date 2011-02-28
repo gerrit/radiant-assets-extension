@@ -17,28 +17,39 @@ table.index .size {
   padding-right: 5px;
 }
 
-#assets .icon {
+table#assets .icon,
+table#assets .thumbnail,
+#attachments .icon,
+#attachments .thumbnail {
+  margin-right: 5px;
+}
+
+#assets .icon,
+#attachments .icon {
+  float: left;
+  font-size: 75%;
   display: block;
   text-align: center;
   background: #ccc;
   text-transform: uppercase;
+  overflow: hidden;
 }
 
-table#assets .icon {
-  display: block;
-  float: left;
+table#assets th.name,
+table#assets td.name {
+  width: auto;
 }
 
-table#assets .icon, table#assets .thumbnail {
-  margin-right: 5px;
+table#assets th.actions {
+/*  min-width: 7em;*/
+  min-width: auto;
 }
 
-table#assets .icon {
-  font-size: 75%;
-  float: left;
-}
+/*table#assets th.size {*/
+/*  min-width: 5em;*/
+/*}*/
 
-#assets, #assets li {
+ul#assets, #assets li {
   display: block;
   list-style: none;
   margin: 0;
@@ -52,6 +63,10 @@ table#assets .icon {
   margin-right: 1px;
   margin-bottom: 1px;
   position: relative;
+}
+
+#attachments li {
+  clear: left;
 }
 
 #assets li a {

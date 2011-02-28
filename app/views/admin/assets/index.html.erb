@@ -1,7 +1,7 @@
 <% include_stylesheet 'admin/extensions/assets/assets' %>
 
 <div class="outset">
-  <%= render :partial => list_view? ? 'list' : 'grid' %>
+  <%= render :partial => (list_view? ? 'list' : 'grid'), :locals => {:assets => @assets} %>
 </div>
 
 <div id="actions">
