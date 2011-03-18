@@ -28,8 +28,9 @@ module AssetTags
   # resizing proportionally
   tag 'image' do |tag|
     asset = find_asset(tag)
-    image = resized_or_original_image(asset, tag.attr['size'])
-    %{<img src="#{image.url}" width="#{image.width}" height="#{image.height}">}
+    options = tag.attr.dup
+    image = resized_or_original_image(asset, options.delete('size'))
+    %{<img src="#{image.url}"#{html_attributes(options)}>}
   end
   
   desc %{
@@ -129,5 +130,10 @@ private
     if asset.image?
       size ? asset.upload.process(:resize, size) : asset.upload
     end
+  end
+  
+  def html_attributes(options)
+    attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
+    " #{attributes}" unless attributes.empty?
   end
 end
