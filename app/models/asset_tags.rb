@@ -27,8 +27,8 @@ module AssetTags
   # TODO: accept width/height attributes and do something sensible like
   # resizing proportionally
   tag 'image' do |tag|
-    assert_id_given(tag)
-    image = find_asset(tag)
+    asset = find_asset(tag)
+    image = resized_or_original_image(asset, tag.attr['size'])
     %{<img src="#{image.url}" width="#{image.width}" height="#{image.height}">}
   end
   
@@ -36,30 +36,33 @@ module AssetTags
     Selects an asset. Does not render anything itself but gives access to the
     asset's attributes such as size
     
-    Accepts optional @size@ attribute, see documentation for r:image
-    
-    <r:asset id="22" [size="200"]><r:url /></r:asset>
+    <r:asset id="22"><r:url /></r:asset>
   }
   tag 'asset' do |tag|
-    assert_id_given(tag)
     tag.locals.asset = find_asset(tag)
     tag.expand
   end
   
-  %w[url width height].each do |attribute|
+  desc %{
+    Renders the URL of an asset
+    
+    Accepts optional size parameter in which case, if the asset is an image,
+    the URL to a resized version of the image will be returned
+    
+    <r:asset:url [size="200x200"] id="22" />
+  }
+  tag 'asset:url' do |tag|
+    image = resized_or_original_image(tag.locals.asset, tag.attr['size'])
+    (image && image.url) || tag.locals.asset.url
+  end
+  
+  %w[caption width height].each do |attribute|
     desc %{
       Renders the #{attribute} of the current asset
     }
     tag "asset:#{attribute}" do |tag|
       tag.locals.asset.send(attribute.to_sym)
     end
-  end
-  
-  desc %{
-    Renders the caption of the current asset
-  }
-  tag 'asset:caption' do |tag|
-    tag.locals.asset.caption
   end
   
   desc %{
@@ -92,17 +95,39 @@ module AssetTags
     end
   end
   
-private
-  def assert_id_given(tag)
-    raise TagError, 'Please supply an id attribute' unless tag.attr['id']
+  # Namespace only
+  tag 'attachments' do |tag|
+    tag.expand
   end
-
+  
+  desc %{
+    Selects the first attached asset of the page and renders the tag's contents.
+    If there are no assets on the page, nothing is rendered.
+  }
+  tag 'attachments:first' do |tag|
+    if attachment = tag.locals.page.attachments.first
+      tag.locals.asset = attachment.asset
+      tag.expand
+    end
+  end
+  
+  tag 'attachments:each' do |tag|
+    tag.locals.page.attachments.collect do |attachment|
+      tag.locals.asset = attachment.asset
+      tag.expand
+    end
+  end
+  
+private
   def find_asset(tag)
-    asset = Asset.find(tag.attr['id'])
-    if(tag.attr['size'])
-      asset.upload.process(:resize, tag.attr['size'])
-    else
-      asset.upload
+    tag.locals.asset || Asset.find(tag.attr['id'])
+  rescue ActiveRecord::RecordNotFound
+    raise TagError, 'Please supply an id attribute'
+  end
+  
+  def resized_or_original_image(asset, size)
+    if asset.image?
+      size ? asset.upload.process(:resize, size) : asset.upload
     end
   end
 end
