@@ -8,6 +8,18 @@
 
 <table class="index" id="assets">
   <tr><td class="name"><%= asset_listing(@asset) %></td></tr>
+  <% if @asset.attachments.any? %>
+    <tr>
+      <th>
+        It's being used on the following
+        <%= pluralize(@asset.attachments.size, 'page') %> and will be removed from
+        there as well:
+        </th>
+    </tr>
+    <% @asset.attachments.each do |attachment| %>
+      <tr><td><%= attachment.page.title %></td></tr>
+    <% end %>
+  <% end %>
 </table>
 
 <% form_for [:admin, @asset], :html => {:method => :delete, 'data-onsubmit_status'=>'Removing asset&#8230;'} do |f| %>
