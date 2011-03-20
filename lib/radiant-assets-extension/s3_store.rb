@@ -1,4 +1,5 @@
 require 'dragonfly'
+require 'aws/s3'
 
 module RadiantAssetsExtension
   # Subclass that allows connecting to S3 regions other than US-Standard
