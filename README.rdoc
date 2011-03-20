@@ -7,7 +7,7 @@ Supports uploading of images as well as other files.
 
 == Radius Tags
 
-<r:images size="300x" />
+<r:image size="300x" />
 
 Proportionally resizes an image to 300px width. Supports imagemagick geometry
 strings to do advanced resizing straight in Radius tags. Resized images are
@@ -17,4 +17,6 @@ request.
 == Todo
 
 - Attaching Assets to Pages
-- Easy/Automatic migration from paperclipped
+- Easy/Automatic migration from paperclipped (currently this extension should
+  only be used on “fresh” radiant sites w/o an asset management solution
+  already in place)
