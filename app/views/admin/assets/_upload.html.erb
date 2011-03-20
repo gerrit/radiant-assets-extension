@@ -1,13 +1,13 @@
 <% include_stylesheet 'admin/extensions/assets/assets' %>
 
 <% form_for record, :url => url, :html => {:multipart => true, :id => 'asset_upload', 'data-onsubmit_status'=>'Uploading Asset&#8230;'} do |f| %>
-  <p>You can select multiple files</p>
+  <p>Click or drag files here to upload</p>
   <%= f.file_field :uploads, :multiple => true %>
   
-  <!-- <p class="buttons">
+  <p class="buttons">
     <%= f.submit 'Upload Asset', :class=>'button' %>
     or <%= link_to 'Cancel', admin_assets_path %>
-  </p> -->
+  </p>
 <% end %>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>

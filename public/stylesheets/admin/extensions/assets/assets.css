@@ -125,3 +125,28 @@ table#assets .remove::before,
 #actions .new a::before {
   background: url('/images/admin/plus.png') no-repeat left bottom;
 }
+
+/*
+  Overriding values from jquery.fileupload-ui.css
+  Need higher specificity as that file is only loaded later
+*/
+
+html .file_upload {
+  width: auto;
+  height: auto;
+  margin: 1em 0;
+}
+
+html .file_upload .buttons {display: none}
+
+
+html .file_upload,
+html .file_upload_small,
+html .file_upload_large {
+  background: #F5F1E2;
+  border-color: #ccc;
+}
+
+html .file_upload_highlight {
+  background: lawngreen;
+}
