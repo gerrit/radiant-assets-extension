@@ -33,7 +33,7 @@ class AssetsExtension < Radiant::Extension
     ApplicationController.helper(:assets)
     Page.class_eval do
       include AssetTags
-      has_many :attachments, :include => :asset
+      has_many :attachments, :include => :asset, :order => :position
     end
   end
 end
