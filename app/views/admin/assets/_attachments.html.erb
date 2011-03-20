@@ -2,10 +2,11 @@
 
 <%= render :partial => 'admin/assets/upload', :locals => {:record => @page.attachments.build, :url => admin_page_attachments_path(@page)} %>
 
-<ul id="attachments">
+<ul id="assets">
   <% @page.attachments.reject(&:new_record?).each do |attachment| %>
     <% content_tag_for :li, attachment do  %>
-      <%= asset_listing(attachment.asset) %>
+      <%= asset_grid_item(attachment.asset) %>
+      <%# TODO: ability to remove attachments %>
     <% end %>
   <% end %>
 </ul>
@@ -13,8 +14,7 @@
 <script type="text/javascript">
   (function($) {
     $(function() {
-      $('#attachments').sortable({
-        cursor: 'crosshair',
+      $('#assets').sortable({
         update: function(event, ui) {
           $.ajax({
             type: "POST",

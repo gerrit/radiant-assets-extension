@@ -3,9 +3,7 @@
     <% assets.each do |asset| %>
       <li>
         <% link_to edit_admin_asset_path(asset) do %>
-          <%= asset_icon(asset, 120) %>
-          <span class="id">ID: <%= asset.id %></span>
-          <span class="caption"><%= asset %></span>
+          <%= asset_grid_item(asset) %>
         <% end %>
         <%= link_to_remove(asset) %>
       </li>

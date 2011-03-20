@@ -5,7 +5,7 @@ class Admin::AttachmentsController < Admin::ResourceController
     rendering_upload_response do
       page = Page.find(params[:page_id])
       attachment = page.attachments.create!(params[:attachment])
-      attachment.asset
+      @template.asset_grid_item(attachment.asset)
     end
   end
   

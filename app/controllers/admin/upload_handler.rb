@@ -12,9 +12,9 @@ module Admin::UploadHandler
     end
     
     # Renders a response appropriate for use with jquery.fileupload.js
-    # Takes a block that should return an Asset instance
+    # Takes a block that should return an HTML string
     def rendering_upload_response
-      render_hacky_json(:markup => @template.asset_listing(yield))
+      render_hacky_json(:markup => yield)
     rescue => e
       logger.warn(e.to_s)
       render_hacky_json(:markup => "Error: #{e.to_s}")

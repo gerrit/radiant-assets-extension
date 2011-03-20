@@ -21,24 +21,20 @@
   (function($) {
     $(function () {
       $('form#asset_upload').fileUploadUI({
-        uploadTable: $('#files'),
-        downloadTable: $('#files'),
+        uploadTable: $('#assets'),
+        downloadTable: $('#assets'),
         buildUploadRow: function (files, index) {
-          return $('<tr><td>' + files[index].name + '<\/td>' +
-                   '<td class="file_upload_progress"><div><\/div><\/td>' +
-                   '<td class="file_upload_cancel">' +
+          return $('<li>' + files[index].name +
+                   '<span class="file_upload_progress"><div><\/div><\/span>' +
+                   '<span class="file_upload_cancel">' +
                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                   '<\/button><\/td><\/tr>');
+                   '<\/button><\/span><\/li>');
         },
         buildDownloadRow: function (file) {
-          return $('<tr><td>' + file.markup + '<\/td><\/tr>');
+          return $('<li>' + file.markup + '<\/li>');
         }
       });
     });
   }(jQuery));
 </script>
-
-<table id="files">
-  <tbody></tbody>
-</table>

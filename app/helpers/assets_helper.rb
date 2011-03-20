@@ -4,6 +4,12 @@ module AssetsHelper
     content_tag(:span, asset.to_s, :class=>'title')
   end
   
+  def asset_grid_item(asset)
+    asset_icon(asset, 120) +
+    content_tag(:span, "ID: #{asset.id}", :class => 'id') +
+    content_tag(:span, asset.to_s, :class => 'caption')
+  end
+  
   def asset_icon(asset, size=30)
     asset.image? ? square_thumb(asset, size) : text_icon(asset, size)
   end

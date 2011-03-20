@@ -18,14 +18,11 @@ table.index .size {
 }
 
 table#assets .icon,
-table#assets .thumbnail,
-#attachments .icon,
-#attachments .thumbnail {
+table#assets .thumbnail {
   margin-right: 5px;
 }
 
-#assets .icon,
-#attachments .icon {
+#assets .icon {
   float: left;
   font-size: 75%;
   display: block;
@@ -63,10 +60,6 @@ ul#assets, #assets li {
   margin-right: 1px;
   margin-bottom: 1px;
   position: relative;
-}
-
-#attachments li {
-  clear: left;
 }
 
 #assets li a {
