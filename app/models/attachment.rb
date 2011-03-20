@@ -6,6 +6,13 @@ class Attachment < ActiveRecord::Base
   
   acts_as_list :scope => :page_id
   
+  def self.reorder(new_order)
+    new_order.each_with_index do |id, index|
+      find(id).update_attributes! :position => index+1
+    end
+    new_order
+  end
+  
   def uploads=(new_uploads)
     (asset || build_asset).uploads=new_uploads
   end

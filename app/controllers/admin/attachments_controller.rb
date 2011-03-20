@@ -8,4 +8,8 @@ class Admin::AttachmentsController < Admin::ResourceController
       attachment.asset
     end
   end
+  
+  def positions
+    render :json => Attachment.reorder(params[:attachment])
+  end
 end

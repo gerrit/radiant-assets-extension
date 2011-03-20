@@ -1,12 +1,28 @@
-<% if @page.attachments.any? %>
-  <h2>Attachments</h2>
-  <ul id="attachments">
-    <% @page.attachments.reject(&:new_record?).each do |attachment| %>
-      <li>
-        <%= asset_listing(attachment.asset) %>
-      </li>
-    <% end %>
-  </ul>  
-<% end %>
+<h2>Attachments</h2>
 
 <%= render :partial => 'admin/assets/upload', :locals => {:record => @page.attachments.build, :url => admin_page_attachments_path(@page)} %>
+
+<ul id="attachments">
+  <% @page.attachments.reject(&:new_record?).each do |attachment| %>
+    <% content_tag_for :li, attachment do  %>
+      <%= asset_listing(attachment.asset) %>
+    <% end %>
+  <% end %>
+</ul>
+
+<script type="text/javascript">
+  (function($) {
+    $(function() {
+      $('#attachments').sortable({
+        cursor: 'crosshair',
+        update: function(event, ui) {
+          $.ajax({
+            type: "POST",
+            url: '<%= positions_admin_page_attachments_path(@page) %>',
+            data: '_method=PUT&'+$(this).sortable('serialize'),
+          });
+        }
+      }).disableSelection();
+    });
+  }(jQuery));
+</script>

@@ -1,7 +1,3 @@
-<table id="files">
-  <tbody></tbody>
-</table>
-
 <% include_stylesheet 'admin/extensions/assets/assets' %>
 
 <% form_for record, :url => url, :html => {:multipart => true, :id => 'asset_upload', 'data-onsubmit_status'=>'Uploading Asset&#8230;'} do |f| %>
@@ -42,3 +38,7 @@
     });
   }(jQuery));
 </script>
+
+<table id="files">
+  <tbody></tbody>
+</table>

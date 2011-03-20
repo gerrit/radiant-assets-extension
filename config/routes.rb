@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.namespace :admin do |admin|
     admin.resources :pages do |pages|
-      pages.resources :attachments
+      pages.resources :attachments, :collection => { :positions => :put }
     end
   end
 end
