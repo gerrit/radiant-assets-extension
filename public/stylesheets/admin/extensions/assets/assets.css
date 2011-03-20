@@ -81,6 +81,10 @@ ul#assets, #assets li {
   display: block;
 }
 
+#assets li .action {
+  right: 2px;
+}
+
 #assets li .caption {
   top: auto;
   bottom: 0;
@@ -100,7 +104,6 @@ table#assets .remove::before {
 }
 
 #assets li .remove {
-  right: 2px;
   width: 12px;
   height: 12px;
   text-indent: -1000em;

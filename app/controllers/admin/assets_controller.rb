@@ -5,7 +5,7 @@ class Admin::AssetsController < Admin::ResourceController
   def create
     rendering_upload_response do
       @asset = Asset.create! params[:asset]
-      @template.asset_listing(@asset)
+      @template.content_tag(:li, @template.asset_listing(@asset))
     end
   end
 end

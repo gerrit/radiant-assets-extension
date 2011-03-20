@@ -114,6 +114,7 @@ module AssetTags
   
   tag 'attachments:each' do |tag|
     tag.locals.page.attachments.collect do |attachment|
+      tag.locals.attachment = attachment
       tag.locals.asset = attachment.asset
       tag.expand
     end

@@ -3,12 +3,7 @@
 <%= render :partial => 'admin/assets/upload', :locals => {:record => @page.attachments.build, :url => admin_page_attachments_path(@page)} %>
 
 <ul id="assets">
-  <% @page.attachments.reject(&:new_record?).each do |attachment| %>
-    <% content_tag_for :li, attachment do  %>
-      <%= asset_grid_item(attachment.asset) %>
-      <%# TODO: ability to remove attachments %>
-    <% end %>
-  <% end %>
+  <%= render :partial => 'admin/assets/attachment', :collection => @page.attachments.reject(&:new_record?) %> 
 </ul>
 
 <script type="text/javascript">
