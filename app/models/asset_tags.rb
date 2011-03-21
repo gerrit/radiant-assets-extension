@@ -107,6 +107,7 @@ module AssetTags
   }
   tag 'attachments:first' do |tag|
     if attachment = tag.locals.page.attachments.first
+      tag.locals.attachment = attachment
       tag.locals.asset = attachment.asset
       tag.expand
     end
