@@ -1,23 +1,32 @@
-<h2>Attachments</h2>
-
-<%= render :partial => 'admin/assets/upload', :locals => {:record => @page.attachments.build, :url => admin_page_attachments_path(@page)} %>
-
-<ul id="assets">
-  <%= render :partial => 'admin/assets/attachment', :collection => @page.attachments.reject(&:new_record?) %> 
-</ul>
-
-<script type="text/javascript">
-  (function($) {
-    $(function() {
-      $('#assets').sortable({
-        update: function(event, ui) {
-          $.ajax({
-            type: "POST",
-            url: '<%= positions_admin_page_attachments_path(@page) %>',
-            data: '_method=PUT&'+$(this).sortable('serialize'),
-          });
-        }
-      }).disableSelection();
-    });
-  }(jQuery));
-</script>
+<%#
+HACK: when page isn't saved there isnt a way to associate uploaded images
+      saving uploads temporarily and associating them on save is messy, but
+      should be the way to go
+ %>
+<% unless @page.new_record? %>
+  <h2>Attachments</h2>
+  
+  <%= render :partial => 'admin/assets/upload', :locals => {:record => @page.attachments.build, :url => admin_page_attachments_path(@page)} %>
+  
+  <ul id="assets">
+    <%= render :partial => 'admin/assets/attachment', :collection => @page.attachments.reject(&:new_record?) %> 
+  </ul>
+  
+  <script type="text/javascript">
+    (function($) {
+      $(function() {
+        $('#assets').sortable({
+          update: function(event, ui) {
+            $.ajax({
+              type: "POST",
+              url: '<%= positions_admin_page_attachments_path(@page) %>',
+              data: '_method=PUT&'+$(this).sortable('serialize'),
+            });
+          }
+        }).disableSelection();
+      });
+    }(jQuery));
+  </script>
+<% else %>
+  <p>Please save page first before uploading attachments.</p>
+<% end %>
