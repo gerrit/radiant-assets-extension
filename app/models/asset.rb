@@ -1,5 +1,6 @@
 class Asset < ActiveRecord::Base
-  has_many :attachments, :include => :page, :dependent => :destroy
+  has_many :attachments, :as => :attachable, :dependent => :destroy
+  
   # HACK: incomplete
   AUDIO_FORMATS = [:wav, :mp3, :m4a, :ogg]
   VIDEO_FORMATS = [:mp4, :avi]
@@ -7,6 +8,10 @@ class Asset < ActiveRecord::Base
   image_accessor :upload
   validates_presence_of :upload
   delegate :url, :width, :height, :landscape, :portrait, :to => :upload
+  
+  def page_attachments
+    attachments.select(&:attached_to_page?)
+  end
   
   def uploads
     []

@@ -1,10 +1,10 @@
 require 'acts_as_list'
 
 class Attachment < ActiveRecord::Base
-  belongs_to :asset, :autosave => true
-  belongs_to :page
+  belongs_to :attachable, :polymorphic => true, :autosave => true
+  belongs_to :parent, :polymorphic => true
   
-  acts_as_list :scope => :page_id
+  acts_as_list :scope => :parent_id
   
   def self.reorder(new_order)
     new_order.each_with_index do |id, index|
@@ -13,11 +13,19 @@ class Attachment < ActiveRecord::Base
     new_order
   end
   
+  def attached_to_page?
+    parent_type == 'Page'
+  end
+  
+  def asset
+    attachable if attachable_type == 'Asset'
+  end
+  
   def uploads=(new_uploads)
-    (asset || build_asset).uploads=new_uploads
+    (self.attachable ||= Asset.new).uploads=new_uploads
   end
   
   def uploads
-    (asset || build_asset).uploads
+    (self.attachable ||= Asset.new).uploads
   end
 end

@@ -8,16 +8,16 @@
 
 <table class="index" id="assets">
   <tr><td class="name"><%= asset_listing(@asset) %></td></tr>
-  <% if @asset.attachments.any? %>
+  <% if @asset.page_attachments.any? %>
     <tr>
       <th>
         It's being used on the following
-        <%= pluralize(@asset.attachments.size, 'page') %> and will be removed from
+        <%= pluralize(@asset.page_attachments.size, 'page') %> and will be removed from
         there as well:
         </th>
     </tr>
-    <% @asset.attachments.each do |attachment| %>
-      <tr><td><%= attachment.page.title %></td></tr>
+    <% @asset.page_attachments.each do |attachment| %>
+      <tr><td><%= attachment.parent.title %></td></tr>
     <% end %>
   <% end %>
 </table>
