@@ -10,11 +10,13 @@ class AssetsExtension < Radiant::Extension
   
   extension_config do |config|
     path = '/assets'
+    
     dragonfly = Dragonfly[:assets]
     dragonfly.configure_with(:imagemagick)
     dragonfly.configure_with(:rails)
-    dragonfly.define_macro(ActiveRecord::Base, :image_accessor)    
+    dragonfly.define_macro(ActiveRecord::Base, :image_accessor)
     dragonfly.url_path_prefix = path
+    dragonfly.url_host = Radiant::Config['assets.host'] if Radiant::Config['assets.host']
     if RadiantAssetsExtension::S3Store.enabled?
       dragonfly.datastore = RadiantAssetsExtension::S3Store.new
       dragonfly.datastore.configure do |c|
