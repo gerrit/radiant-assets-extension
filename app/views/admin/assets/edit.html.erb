@@ -18,11 +18,11 @@
     </table>
     <%= f.file_field :upload %>
     <%= display(@asset) %>
-    <%- if @asset.attachments.any? -%>
-      <h2>Included on <%= pluralize(@asset.attachments.size, 'this page', 'these pages') %>:</h2>
+    <%- if @asset.page_attachments.any? -%>
+      <h2>Included on <%= pluralize(@asset.page_attachments.size, 'this page', 'these pages') %>:</h2>
       <ul>
-        <%- @asset.attachments.each do |attachment| -%>
-          <li><%= link_to attachment.page.title, edit_admin_page_path(attachment.page) %></li>
+        <%- @asset.page_attachments.each do |attachment| -%>
+          <li><%= link_to attachment.parent.title, edit_admin_page_path(attachment.parent) %></li>
         <%- end -%>
       </ul>
     <%- end -%>
