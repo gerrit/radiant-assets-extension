@@ -35,7 +35,7 @@ module AssetTags
   
   desc %{
     Selects an asset. Does not render anything itself but gives access to the
-    asset's attributes such as size
+    asset's attributes such as url, widht and height
     
     <r:asset id="22"><r:url /></r:asset>
   }
@@ -67,14 +67,14 @@ module AssetTags
   end
   
   desc %{
-    Renders contents if the current asset is an image
+    Renders it’s contents if the current asset is an image
   }
   tag 'asset:if_image' do |tag|
     tag.expand if tag.locals.asset.image?
   end
 
   desc %{
-    Renders contents if the current asset isn't an image
+    Renders it’s contents if the current asset isn't an image
   }
   tag 'asset:unless_image' do |tag|
     tag.expand unless tag.locals.asset.image?
@@ -82,14 +82,14 @@ module AssetTags
   
   %w[landscape portrait].each do |orientation|
     desc %{
-      Renders contents if the current image is in #{orientation} orientation
+      Renders it’s contents if the current image is in #{orientation} orientation
     }
     tag "asset:if_#{orientation}" do |tag|
       tag.expand if tag.locals.asset.send "#{orientation}?".to_sym
     end
     
     desc %{
-      Renders contents if the current image isn't in #{orientation} orientation
+      Renders it’s contents if the current image isn't in #{orientation} orientation
     }
     tag "asset:unless_#{orientation}" do |tag|
       tag.expand unless tag.locals.asset.send "#{orientation}?".to_sym
@@ -102,7 +102,9 @@ module AssetTags
   end
   
   desc %{
-    Selects the first attached asset of the page and renders the tag's contents.
+    Renders the tag‘s contents with the first attached asset of the current
+    page selected.
+    
     If there are no assets on the page, nothing is rendered.
   }
   tag 'attachments:first' do |tag|
@@ -113,6 +115,12 @@ module AssetTags
     end
   end
   
+  
+  desc %{
+    Cycles through the attachments of the current page and renders the tag’s
+    contents for each of them.
+  }
+  # TODO: arbitrary ordering and limiting
   tag 'attachments:each' do |tag|
     tag.locals.page.attachments.collect do |attachment|
       tag.locals.attachment = attachment
