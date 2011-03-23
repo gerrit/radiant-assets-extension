@@ -23,7 +23,7 @@ module RadiantAssetsExtension
       # HACK: AWS::S3 doesn't support S3 international regions properly
       # https://github.com/marcel/aws-s3/issues#issue/4/comment/411302
       # we monkey-patch the default host
-      AWS::S3::DEFAULT_HOST.replace Radiant::Config['s3.host'] || self.class.s3_region_hosts['us-east-1']
+      AWS::S3::DEFAULT_HOST.replace Radiant::Config['s3.host'] if Radiant::Config['s3.host']
       super({
         :bucket_name => Radiant::Config['s3.bucket'] || DEFAULT_BUCKET_NAME,
         :access_key_id => Radiant::Config['s3.key'],
