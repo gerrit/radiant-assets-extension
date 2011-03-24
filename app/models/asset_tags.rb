@@ -1,6 +1,5 @@
 module AssetTags
   include Radiant::Taggable
-  
   class TagError < StandardError;end
   
   desc %{
@@ -27,72 +26,94 @@ module AssetTags
   # TODO: accept width/height attributes and do something sensible like
   # resizing proportionally
   tag 'image' do |tag|
-    asset = find_asset(tag)
-    options = tag.attr.dup
-    image = resized_or_original_image(asset, options.delete('size'))
-    %{<img src="#{image.url}"#{html_attributes(options)}>}
-  end
-  
-  desc %{
-    Selects an asset. Does not render anything itself but gives access to the
-    asset's attributes such as url, widht and height
-    
-    <r:asset id="22"><r:url /></r:asset>
-  }
-  tag 'asset' do |tag|
-    tag.locals.asset = find_asset(tag)
-    tag.expand
-  end
-  
-  desc %{
-    Renders the URL of an asset
-    
-    Accepts optional size parameter in which case, if the asset is an image,
-    the URL to a resized version of the image will be returned
-    
-    <r:asset:url [size="200x200"] id="22" />
-  }
-  tag 'asset:url' do |tag|
-    image = resized_or_original_image(tag.locals.asset, tag.attr['size'])
-    (image && image.url) || tag.locals.asset.url
-  end
-  
-  %w[caption width height].each do |attribute|
-    desc %{
-      Renders the #{attribute} of the current asset
-    }
-    tag "asset:#{attribute}" do |tag|
-      tag.locals.asset.send(attribute.to_sym)
+    assign_asset_and_upload!(tag)
+    if tag.locals.asset.image?
+      img = (tag.locals.asset_upload ||= tag.locals.asset.upload)
+      %{<img src="#{img.url}" width="#{img.width}" height="#{img.height}" #{html_attributes(tag.attr.except('size'))}>}
     end
   end
   
   desc %{
-    Renders it’s contents if the current asset is an image
+    Selects an asset. Does not render anything itself but gives access to the
+    asset's attributes such as caption, url and width or height
+    
+    Accepts optional size parameter in which case, if the asset is an image,
+    the asset is resized and url, width and height will refer to the resized
+    image.
+    
+    *Usage*
+    
+      <pre><code><r:asset id="22" [size="200x200"]>...</r:asset></code></pre>
+    
+    *Examples*
+    
+    Will render URL to original uploaded file
+    <pre><code><r:asset id="66"><r:url /></r:asset></code></pre>
+    
+    Will render render height of resized image (500)
+    <pre><code><r:asset id="66" size="x500">New Height: <r:height />px</r:asset></code></pre>
+  }
+  tag 'asset' do |tag|
+    assign_asset_and_upload!(tag)
+    tag.expand
+  end
+  
+  %w[url width height].each do |attribute|
+    desc %{
+      Renders the #{attribute} of the current asset
+            
+      Accepts optional size parameter in which case, if the asset is an image,
+      the #{attribute} to a resized version of the image will be returned.
+      
+      *Usage:*
+      
+      <pre><code><r:asset:#{attribute} [size="200x200"] id="22" /></code></pre>
+    }
+    tag "asset:#{attribute}" do |tag|
+      assign_asset_and_upload!(tag)
+      (tag.locals.asset_upload ||= tag.locals.asset.upload).send(attribute.to_sym)
+    end
+  end
+
+  desc %{
+    Renders the caption of the current asset
+  }
+  tag 'asset:caption' do |tag|
+    assign_asset_and_upload!(tag)
+    tag.locals.asset.caption
+  end
+  
+  desc %{
+    Renders its contents if the current asset is an image
   }
   tag 'asset:if_image' do |tag|
+    assign_asset_and_upload!(tag)
     tag.expand if tag.locals.asset.image?
   end
 
   desc %{
-    Renders it’s contents if the current asset isn't an image
+    Renders its contents if the current asset isn't an image
   }
   tag 'asset:unless_image' do |tag|
+    assign_asset_and_upload!(tag)
     tag.expand unless tag.locals.asset.image?
   end
   
   %w[landscape portrait].each do |orientation|
     desc %{
-      Renders it’s contents if the current image is in #{orientation} orientation
+      Renders its contents if the current image is in #{orientation} orientation
     }
     tag "asset:if_#{orientation}" do |tag|
-      tag.expand if tag.locals.asset.send "#{orientation}?".to_sym
+      assign_asset_and_upload!(tag)
+      tag.expand if (tag.locals.asset_upload ||= tag.locals.asset.upload).send "#{orientation}?".to_sym
     end
     
     desc %{
-      Renders it’s contents if the current image isn't in #{orientation} orientation
+      Renders its contents if the current image isn't in #{orientation} orientation
     }
     tag "asset:unless_#{orientation}" do |tag|
-      tag.expand unless tag.locals.asset.send "#{orientation}?".to_sym
+      assign_asset_and_upload!(tag)
+      tag.expand unless (tag.locals.asset_upload ||= tag.locals.asset.upload).send "#{orientation}?".to_sym
     end
   end
   
@@ -130,15 +151,22 @@ module AssetTags
   end
   
 private
-  def find_asset(tag)
-    tag.locals.asset || Asset.find(tag.attr['id'])
-  rescue ActiveRecord::RecordNotFound
-    raise TagError, 'Please supply an id attribute'
+  def assign_asset_and_upload!(tag)
+    assign_asset!(tag)
+    assign_upload!(tag)
   end
   
-  def resized_or_original_image(asset, size)
-    if asset.image?
-      size ? asset.upload.process(:resize, size) : asset.upload
+  def assign_asset!(tag)
+    if tag.attr['id']
+      tag.locals.asset = Asset.find(tag.attr['id'])
+    else
+      tag.locals.asset || raise(TagError, 'Please supply an id attribute')
+    end
+  end
+  
+  def assign_upload!(tag)
+    tag.locals.asset_upload = if tag.attr['size']
+      tag.locals.asset.upload.process(:resize, tag.attr['size'])
     end
   end
   
