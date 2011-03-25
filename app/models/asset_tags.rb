@@ -3,7 +3,14 @@ module AssetTags
   class TagError < StandardError;end
   
   desc %{
-    Renders an image tag
+    Renders an image tag for the current asset (if it’s an image)
+    
+    You can resize the image using the @width@, @height@ and @size@ attributes.
+    
+    Using @width@ and/or @height@ will resize the image to the specified
+    width/height maintaining the aspect ratio. For more complex resizing operations
+    you can use the @size@ attribute which will override any supplied
+    width/height attributes.
     
     Examples of possible values for the @size@ attribute
     
@@ -21,31 +28,32 @@ module AssetTags
     '400x300se'          crop, with south-east gravity
     '400x300+50+100'     crop from the point 50,100 with width, height 400,300
     
-    <r:image id="2" [size="400x200"] />
+    *Usage:* 
+    
+    <pre><code><r:image id="2" [width="200"] [height="400"] [size="400x200"] /></code></pre>
   }
-  # TODO: accept width/height attributes and do something sensible like
-  # resizing proportionally
   tag 'image' do |tag|
     assign_asset_and_upload!(tag)
     if tag.locals.asset.image?
       img = (tag.locals.asset_upload ||= tag.locals.asset.upload)
-      %{<img src="#{img.url}" width="#{img.width}" height="#{img.height}" #{html_attributes(tag.attr.except('size'))}>}
+      fill_dimension_attributes!(tag)
+      %{<img src="#{img.url}"#{html_attr_string(tag.attr.except('size'))}>}
     end
   end
   
   desc %{
     Selects an asset. Does not render anything itself but gives access to the
-    asset's attributes such as caption, url and width or height
+    asset's attributes such as @caption@, @url@ and @width@/@height@
     
-    Accepts optional size parameter in which case, if the asset is an image,
-    the asset is resized and url, width and height will refer to the resized
-    image.
+    Accepts optional @size@ parameter in which case, if the asset is an image,
+    the asset is resized and any child @url@, @width@ and @height@ tags will refer
+    to the resized image.
     
-    *Usage*
+    *Usage:*
     
-      <pre><code><r:asset id="22" [size="200x200"]>...</r:asset></code></pre>
+    <pre><code><r:asset id="22" [size="200x200"]>...</r:asset></code></pre>
     
-    *Examples*
+    *Examples:*
     
     Will render URL to original uploaded file
     <pre><code><r:asset id="66"><r:url /></r:asset></code></pre>
@@ -58,6 +66,8 @@ module AssetTags
     tag.expand
   end
   
+  # NOTE: width/height tags require analysing the image if you resized it
+  # this can be quite slow. Avoid using with resized images.
   %w[url width height].each do |attribute|
     desc %{
       Renders the #{attribute} of the current asset
@@ -164,14 +174,39 @@ private
     end
   end
   
+  def fill_dimension_attributes!(tag)
+    # Can't use aspect_ratio here because it's not cached on the model
+    # Using it would require analysing the image which we want to postpone
+    # The original height/width are cached on upload though
+    aspect_ratio = tag.locals.asset.width.to_f / tag.locals.asset.height.to_f
+    if tag.attr['width'] && tag.attr['height']
+      return
+    elsif tag.attr['width']
+      tag.attr['height'] = (tag.attr['width'].to_i / aspect_ratio).to_i
+    elsif h = tag.attr['height']
+      tag.attr['width'] = (tag.attr['height'].to_i * aspect_ratio).to_i
+    end
+  end
+  
   def assign_upload!(tag)
+    tag.attr['size'] ||= build_geometry_string(tag.attr['width'], tag.attr['height'])
     tag.locals.asset_upload = if tag.attr['size']
       tag.locals.asset.upload.process(:resize, tag.attr['size'])
     end
   end
   
-  def html_attributes(options)
-    attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
+  def build_geometry_string(width, height)
+    if width && height
+      "#{width}x#{height}"
+    elsif width
+      "#{width}x"
+    elsif height
+      "x#{height}"
+    end
+  end
+  
+  def html_attr_string(hash)
+    attributes = hash.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
     " #{attributes}" unless attributes.empty?
   end
 end
