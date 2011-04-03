@@ -133,6 +133,20 @@ module AssetTags
   end
   
   desc %{
+    Renders the tag’s contents if the page has any assets attached.
+  }
+  tag 'if_attachments' do |tag|
+    tag.expand if tag.locals.page.attachments.any?
+  end
+
+  desc %{
+    Renders the tag’s contents if the page has no assets attached.
+  }
+  tag 'unless_attachments' do |tag|
+    tag.expand unless tag.locals.page.attachments.any?
+  end
+  
+  desc %{
     Renders the tag‘s contents with the first attached asset of the current
     page selected.
     

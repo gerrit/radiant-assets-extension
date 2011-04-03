@@ -36,7 +36,7 @@ class AssetsExtension < Radiant::Extension
     ApplicationController.helper(:assets)
     Page.class_eval do
       include AssetTags
-      has_many :attachments, :as => :parent, :include => :attachable, :order => :position, :dependent => :destroy
+      has_many :attachments, :as => :parent, :order => :position, :dependent => :destroy
     end
   end
 end
