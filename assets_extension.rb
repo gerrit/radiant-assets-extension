@@ -15,7 +15,7 @@ class AssetsExtension < Radiant::Extension
     dragonfly.configure_with(:imagemagick)
     # Overriding command to strip metadata from resized/converted images
     # see https://github.com/markevans/dragonfly/pull/61#issuecomment-1037694
-    dragonfly.configure do |c|
+    dragonfly.processor.configure do |c|
       c.convert_command = 'convert -strip'
     end
     dragonfly.configure_with(:rails)
