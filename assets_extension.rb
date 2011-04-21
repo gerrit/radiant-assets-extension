@@ -1,6 +1,6 @@
 # Uncomment this if you reference any of your controllers in activate
 # require_dependency 'application_controller'
-require 'radiant-assets-extension/version'
+require 'radiant-assets-extension'
 require 'radiant-assets-extension/s3_store'
 
 class AssetsExtension < Radiant::Extension
@@ -13,7 +13,7 @@ class AssetsExtension < Radiant::Extension
     
     dragonfly = Dragonfly[:assets]
     dragonfly.configure_with(:imagemagick)
-    # Overriding command to strip metadata from Resized/converted images
+    # Overriding command to strip metadata from resized/converted images
     # see https://github.com/markevans/dragonfly/pull/61#issuecomment-1037694
     dragonfly.configure do |c|
       c.convert_command = 'convert -strip'
