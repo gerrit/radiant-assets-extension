@@ -20,7 +20,7 @@ class AssetsExtension < Radiant::Extension
     dragonfly.define_macro(ActiveRecord::Base, :image_accessor)
     dragonfly.url_path_prefix = path
     # TODO: optional SSL support for url_host. could protocol-relative urls be used?
-    dragonfly.url_host = 'http://' + Radiant::Config['assets.host'] if Radiant::Config['assets.host']
+    dragonfly.url_host = 'http://' + Radiant::Config['assets.host'] unless Radiant::Config['assets.host'].blank?
     if RadiantAssetsExtension::S3Store.enabled?
       dragonfly.datastore = RadiantAssetsExtension::S3Store.new
       dragonfly.datastore.configure do |c|
