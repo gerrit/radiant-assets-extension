@@ -6,6 +6,6 @@ class AddImagesTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table
+    drop_table :images
   end
 end

@@ -12,8 +12,8 @@ class AddTimestampsAndLockingToAssets < ActiveRecord::Migration
   end
 
   def self.down
+    remove_column :assets, :updated_at
+    remove_column :assets, :created_at
     remove_column :assets, :lock_version
-    add_column :assets, :created_at
-    add_column :assets, :updated_at
   end
 end
