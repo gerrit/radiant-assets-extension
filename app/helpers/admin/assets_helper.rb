@@ -1,4 +1,15 @@
 module Admin::AssetsHelper  
+  def asset_listing(asset)
+    asset_icon(asset) +
+    content_tag(:span, asset.to_s, :class=>'title')
+  end
+  
+  def asset_grid_item(asset)
+    asset_icon(asset, 120) +
+    content_tag(:span, "ID: #{asset.id}", :class => 'id') +
+    content_tag(:span, asset.to_s, :class => 'caption')
+  end
+
   def asset_icon(asset, size=30)
     asset.image? ? square_thumb(asset, size) : text_icon(asset, size)
   end
@@ -40,5 +51,18 @@ module Admin::AssetsHelper
   
   def audio_player(asset)
     %Q{<audio src="#{asset.upload.url}" type="#{asset.upload.mime_type}" controls="controls">}
+  end
+
+  def link_to_remove(asset)
+    link_to 'Remove', remove_admin_asset_path(asset), :class => 'action remove', :title => 'Remove Asset'
+  end
+  
+  def list_view?
+    params[:view] == 'list'
+  end
+  
+  def view_toggle
+    other = list_view? ? 'grid' : 'list'
+    link_to "Switch to #{other} view", admin_assets_path(:view => other)
   end
 end
