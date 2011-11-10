@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 namespace :radiant do
   namespace :extensions do
     namespace :assets do

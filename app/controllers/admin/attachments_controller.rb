@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class Admin::AttachmentsController < Admin::ResourceController
   include Admin::UploadHandler
   

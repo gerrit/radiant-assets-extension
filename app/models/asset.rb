@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class Asset < ActiveRecord::Base
   has_many :attachments, :as => :attachable, :dependent => :destroy
   

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'acts_as_list'
 
 class Attachment < ActiveRecord::Base

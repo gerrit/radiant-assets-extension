@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 module AssetsHelper  
   def asset_listing(asset)
     asset_icon(asset) +

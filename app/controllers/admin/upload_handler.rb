@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 module Admin::UploadHandler
   private
     # HACK: sending JSON as text/html
