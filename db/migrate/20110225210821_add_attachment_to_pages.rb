@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class AddAttachmentToPages < ActiveRecord::Migration
   def self.up
     create_table :attachments do |t|

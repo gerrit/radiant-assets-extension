@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class AddTimestampsAndLockingToAssets < ActiveRecord::Migration
   def self.up
     add_column :assets, :lock_version, :integer, :default => 0

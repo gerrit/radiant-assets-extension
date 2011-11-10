@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class RenameModelClass < ActiveRecord::Migration
   def self.up
     rename_table :images, :assets

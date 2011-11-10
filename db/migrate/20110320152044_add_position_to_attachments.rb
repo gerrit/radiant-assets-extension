@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class AddPositionToAttachments < ActiveRecord::Migration
   def self.up
     add_column :attachments, :position, :integer

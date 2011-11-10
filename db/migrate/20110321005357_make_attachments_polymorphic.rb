@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class MakeAttachmentsPolymorphic < ActiveRecord::Migration
   def self.up
     rename_column :attachments, :page_id, :parent_id
