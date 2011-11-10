@@ -3,11 +3,13 @@ class MakeAttachmentsPolymorphic < ActiveRecord::Migration
   def self.up
     rename_column :attachments, :page_id, :parent_id
     add_column :attachments, :parent_type, :string
-    Attachment.update_all 'parent_type = "Page"'
+    # use single quotes in query to be compatible with postgres
+    Attachment.update_all "parent_type = 'Page'"
 
     rename_column :attachments, :asset_id, :attachable_id
     add_column :attachments, :attachable_type, :string
-    Attachment.update_all 'attachable_type = "Asset"'
+    # use single quotes in query to be compatible with postgres
+    Attachment.update_all "attachable_type = 'Asset'"
   end
 
   def self.down
